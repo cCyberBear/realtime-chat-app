@@ -1,0 +1,47 @@
+.ChatListItem{
+    border-bottom: 1px solid rgb(223, 223, 223);
+    .itemButton{
+        min-height: 92px;
+        padding: 12px 16px;
+    }
+    .outer{
+        position: relative;
+        margin-right: 16px;
+        .inside{
+            margin: -0.2rem;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            z-index: 10;
+        }
+    }
+    .text{
+        min-width: 1px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .noti{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        .date{
+            margin-bottom: 8px;
+            white-space: nowrap;
+        }
+        .unread{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 9999px;
+            font-size: 14px;
+            text-align: center;
+            color: #fff;
+            background-color: #039be5;
+        }
+    }
+
+}
