@@ -1,18 +1,15 @@
-import { GET_CHAT, SEND_MESSAGE } from "../type";
+import { SET_CONSERVATIONS } from "../type";
 
-const initialState = [];
+const initialState = {
+  conservations: [],
+};
 
 const chat = function (state = initialState, action) {
   switch (action.type) {
-    case GET_CHAT: {
-      return {
-        ...action.chat,
-      };
-    }
-    case SEND_MESSAGE: {
+    case SET_CONSERVATIONS: {
       return {
         ...state,
-        dialog: [...state.dialog, action.message],
+        conservations: action.payload,
       };
     }
     default: {

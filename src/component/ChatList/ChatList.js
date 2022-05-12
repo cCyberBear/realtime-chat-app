@@ -18,6 +18,7 @@ import ChatListItem from "../ChatListItem/ChatListItem";
 import { useSelector } from "react-redux";
 const ChatList = () => {
   const [moreMenuEl, setMoreMenuEl] = useState(null);
+  const conservations = useSelector((state) => state.chatReducer.conservations);
 
   const handleMoreMenuClick = (event) => {
     setMoreMenuEl(event.currentTarget);
@@ -26,7 +27,6 @@ const ChatList = () => {
   const handleMoreMenuClose = (event) => {
     setMoreMenuEl(null);
   };
-  const chatLists = useSelector((state) => state.userReducer.chatLists);
   return (
     <div className="ChatList">
       <AppBar position="static" color="default" elevation={1}>
@@ -64,7 +64,7 @@ const ChatList = () => {
       </AppBar>
       <div className="scroll-bar">
         <List className="list">
-          {chatLists.map((val) => (
+          {conservations.map((val) => (
             <ChatListItem value={val} />
           ))}
         </List>

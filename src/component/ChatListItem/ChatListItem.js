@@ -7,10 +7,13 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import avatar from "../../assets/img/dd3abcf21ee0dfbe86f1.jpg";
+import { useSelector } from "react-redux";
+import noavatar from "../../assets/img/noAvatar.png";
 import StatusIcon from "../StatusIcon/StatusIcon";
 import "./ChatListItem.scss";
 const ChatListItem = ({ value }) => {
+  const currentUser = useSelector((state) => state.userReducer.currentUser);
+  const chater = value.members.filter((val) => val._id !== currentUser._id)[0];
   return (
     <ListItem className="ChatListItem" disablePadding>
       <ListItemButton className="itemButton">
@@ -18,10 +21,13 @@ const ChatListItem = ({ value }) => {
           <div className="inside">
             <StatusIcon status={value.status} />
           </div>
-          <Avatar src={avatar} alt="img"></Avatar>
+          <Avatar
+            src={chater.profilePicture ? chater.profilePicture : noavatar}
+            alt="avatar"
+          ></Avatar>
         </div>
         <ListItemText
-          primary={<p className="text">{value.name}</p>}
+          primary={<p className="text">{chater.username}</p>}
           secondary={<p className="text">{value.message}</p>}
         />
         <div className="noti">

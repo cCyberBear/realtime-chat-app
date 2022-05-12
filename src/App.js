@@ -1,22 +1,23 @@
-import Chat from "./component/Chat/Chat";
-import { useSelector } from "react-redux";
-import { Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUser } from "./action/userActions";
 import "./App.scss";
-import ChatList from "./component/ChatList/ChatList";
+import Logged from "./component/Logged/Logged";
+
 import LoginPage from "./component/LoginPage/LoginPage";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const authen = useSelector((state) => state.userReducer.authen);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    dispatch(getCurrentUser(token));
+  }, []);
+
   const user = useSelector((state) => state.userReducer.currentUser);
   return (
     <div className="App">
-      {!user ? (
-        <LoginPage />
-      ) : (
-        <div className="Logged">
-          <ChatList />
-          <Chat />
-        </div>
-      )}
+      {authen ? <p>Authing ..... </p> : user ? <Logged /> : <LoginPage />}
     </div>
   );
 };
