@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Divider,
   ListItem,
   ListItemButton,
   ListItemText,
@@ -20,7 +19,7 @@ const ChatListItem = ({ value }) => {
     <ListItem
       className="ChatListItem"
       disablePadding
-      onClick={() => dispatch(getCurrentChat(value._id))}>
+      onClick={() => dispatch(getCurrentChat(value))}>
       <ListItemButton className="itemButton">
         <div className="outer">
           <div className="inside">

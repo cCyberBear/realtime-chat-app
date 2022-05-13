@@ -3,13 +3,11 @@ import Chat from "../Chat/Chat";
 import ChatList from "../ChatList/ChatList";
 import { useEffect } from "react";
 import { getConservation } from "../../action/chatAction";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 const Logged = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.userReducer.currentUser.username);
-  dispatch(getConservation());
   useEffect(() => {
-    console.log(user);
+    dispatch(getConservation());
   });
   return (
     <div style={{ display: "flex" }} className="Logged">
