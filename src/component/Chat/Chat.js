@@ -7,7 +7,7 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Chat.scss";
 import noAvatar from "../../assets/img/noAvatar.png";
 import StatusIcon from "../StatusIcon/StatusIcon";
@@ -22,6 +22,10 @@ const Chat = () => {
   const messages = useSelector((state) => state.chatReducer?.currentChat);
   const currentUser = useSelector((state) => state.userReducer.currentUser);
   const conversation = useSelector((state) => state.chatReducer.opositeUser);
+  const scrollRef = useRef();
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
   const opositeUserData = conversation?.members.filter(
     (val) => val._id !== currentUser._id
   )[0];
@@ -57,7 +61,8 @@ const Chat = () => {
                         ? opositeUserData.profilePicture
                         : noAvatar
                     }
-                    alt="img"></Avatar>
+                    alt="img"
+                  ></Avatar>
                 </div>
                 <Typography color="inherit" className="name">
                   {opositeUserData.username}
@@ -68,11 +73,13 @@ const Chat = () => {
           <div className="chatBoxWrapper">
             <div className="chatBoxTop ">
               {messages.map((val) => (
-                <Message
-                  key={val._id}
-                  val={val}
-                  not_own={val.sender !== currentUser._id}
-                />
+                <div ref={scrollRef}>
+                  <Message
+                    key={val._id}
+                    val={val}
+                    not_own={val.sender !== currentUser._id}
+                  />
+                </div>
               ))}
             </div>
             <div className="chatBoxBottom ">

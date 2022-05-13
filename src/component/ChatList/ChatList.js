@@ -8,8 +8,10 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+  Modal,
   Paper,
   Toolbar,
+  Typography,
 } from "@mui/material";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
@@ -32,24 +34,59 @@ const ChatList = () => {
   const handleMoreMenuClose = (event) => {
     setMoreMenuEl(null);
   };
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const addFriend = () => {
+    handleOpen();
+    handleMoreMenuClose();
+  };
+  const style = {
+    bgcolor: "white",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "50%",
+    hieght: "50vh",
+    boxShadow: 24,
+    p: 4,
+  };
   return (
     <div className="ChatList">
       <AppBar position="static" color="default" elevation={1}>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Paper style={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Text in a modal
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </Typography>
+          </Paper>
+        </Modal>
         <Toolbar className="user-bar">
           <Avatar src={avatar} alt="avatar"></Avatar>
           <div>
             <IconButton
               aria-owns={moreMenuEl ? "chats-more-menu" : null}
               aria-haspopup="true"
-              onClick={handleMoreMenuClick}>
+              onClick={handleMoreMenuClick}
+            >
               <MoreVertIcon />
             </IconButton>
             <Menu
               id="chats-more-menu"
               anchorEl={moreMenuEl}
               open={Boolean(moreMenuEl)}
-              onClose={handleMoreMenuClose}>
-              <MenuItem onClick={handleMoreMenuClose}>
+              onClose={handleMoreMenuClose}
+            >
+              <MenuItem onClick={addFriend}>
                 <ListItemIcon>
                   <PersonAddAltIcon fontSize="small" />
                 </ListItemIcon>

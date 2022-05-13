@@ -15,6 +15,7 @@ const App = () => {
   }, []);
 
   const user = useSelector((state) => state.userReducer.currentUser);
+
   return (
     <div className="App">
       {authen ? <p>Authing ..... </p> : user ? <Logged /> : <LoginPage />}
