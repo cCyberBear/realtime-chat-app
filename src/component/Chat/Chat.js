@@ -13,6 +13,7 @@ import avatar from "../../assets/img/dd3abcf21ee0dfbe86f1.jpg";
 import StatusIcon from "../StatusIcon/StatusIcon";
 import Message from "../Message/Message";
 import SendIcon from "@mui/icons-material/Send";
+import { useSelector } from "react-redux";
 
 const Chat = () => {
   const [input, setInput] = useState("");
@@ -25,6 +26,10 @@ const Chat = () => {
   const handleInputChange = (e) => {
     setInput(e.target.value);
   };
+
+  const messages = useSelector((state) => state.chatReducer.currentChat);
+  const currentUser = useSelector((state) => state.userReducer.currentUser);
+
   return (
     <div className="Chat">
       <AppBar className="appbar" elevation={1}>
@@ -45,20 +50,9 @@ const Chat = () => {
       </AppBar>
       <div className="chatBoxWrapper">
         <div className="chatBoxTop ">
-          <Message avatar={avatar} notOwn={true} time={"11:31"} />
-          <Message time={"11:32"} />
-          <Message avatar={avatar} notOwn={true} time={"11:33"} />
-          <Message time={"11:34"} />
-          <Message avatar={avatar} notOwn={true} time={"11:35"} />
-          <Message time={"11:36"} />
-          <Message time={"11:36"} />
-          <Message time={"11:36"} />
-          <Message time={"11:36"} />
-          <Message time={"11:36"} />
-          <Message time={"11:36"} />
-          <Message time={"11:36"} />
-          <Message time={"11:36"} />
-          <Message time={"11:36"} />
+          {messages.map((val) => (
+            <Message val={val} notOwn={val.sender !== currentUser._id} />
+          ))}
         </div>
         <div className="chatBoxBottom ">
           <Paper className="paper">

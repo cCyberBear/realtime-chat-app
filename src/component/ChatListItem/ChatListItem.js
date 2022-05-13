@@ -7,15 +7,20 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentChat } from "../../action/chatAction";
 import noavatar from "../../assets/img/noAvatar.png";
 import StatusIcon from "../StatusIcon/StatusIcon";
 import "./ChatListItem.scss";
 const ChatListItem = ({ value }) => {
+  const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.userReducer.currentUser);
   const chater = value.members.filter((val) => val._id !== currentUser._id)[0];
   return (
-    <ListItem className="ChatListItem" disablePadding>
+    <ListItem
+      className="ChatListItem"
+      disablePadding
+      onClick={() => dispatch(getCurrentChat(value._id))}>
       <ListItemButton className="itemButton">
         <div className="outer">
           <div className="inside">
@@ -23,8 +28,7 @@ const ChatListItem = ({ value }) => {
           </div>
           <Avatar
             src={chater.profilePicture ? chater.profilePicture : noavatar}
-            alt="avatar"
-          ></Avatar>
+            alt="avatar"></Avatar>
         </div>
         <ListItemText
           primary={<p className="text">{chater.username}</p>}

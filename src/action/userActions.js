@@ -5,7 +5,7 @@ const getCurrentUser = (token) => async (dispatch) => {
   try {
     dispatch({ type: SET_AUTHEN, payload: true });
     setAuthToken(token);
-    const res = await axios.get("http://localhost:5000/kd/api/v0/user/me");
+    const res = await axios.get("http://localhost:3300/kd/api/v0/user/me");
     dispatch({ type: SET_USER, payload: res.data.user });
   } catch (error) {
     setAuthToken(null);
@@ -16,7 +16,7 @@ const login = (data) => async (dispatch) => {
   try {
     dispatch({ type: SET_LOADING, payload: true });
     const res = await axios.post(
-      "http://localhost:5000/kd/api/v0/user/login",
+      "http://localhost:3300/kd/api/v0/user/login",
       data
     );
     localStorage.setItem("token", res.data.token);

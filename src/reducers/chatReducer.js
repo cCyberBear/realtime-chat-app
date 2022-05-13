@@ -1,7 +1,8 @@
-import { SET_CONSERVATIONS } from "../type";
+import { SET_CONSERVATIONS, SET_CURRENT_CHAT } from "../type";
 
 const initialState = {
   conservations: [],
+  currentChat: [],
 };
 
 const chat = function (state = initialState, action) {
@@ -10,6 +11,12 @@ const chat = function (state = initialState, action) {
       return {
         ...state,
         conservations: action.payload,
+      };
+    }
+    case SET_CURRENT_CHAT: {
+      return {
+        ...state,
+        currentChat: action.payload,
       };
     }
     default: {
