@@ -22,10 +22,15 @@ import avatar from "../../assets/img/dd3abcf21ee0dfbe86f1.jpg";
 import React, { useState } from "react";
 import "./ChatList.scss";
 import ChatListItem from "../ChatListItem/ChatListItem";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUser } from "../../action/userActions";
+import SearchItem from "../SearchItem/SearchItem";
 const ChatList = () => {
   const [moreMenuEl, setMoreMenuEl] = useState(null);
   const conservations = useSelector((state) => state.chatReducer.conservations);
+  const users = useSelector((state) => state.userReducer.users);
+  const dispatch = useDispatch();
+  const [input, setInput] = useState("");
 
   const handleMoreMenuClick = (event) => {
     setMoreMenuEl(event.currentTarget);
@@ -35,39 +40,67 @@ const ChatList = () => {
     setMoreMenuEl(null);
   };
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setOpen(true);
+    dispatch(getAllUser());
+  };
   const handleClose = () => setOpen(false);
   const addFriend = () => {
     handleOpen();
     handleMoreMenuClose();
   };
   const style = {
+    textAlign: "center",
     bgcolor: "white",
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "50%",
-    hieght: "50vh",
+    width: "400px",
+    height: "50vh",
     boxShadow: 24,
     p: 4,
+    overflowY: "scroll",
+  };
+  const search = {
+    display: "flex",
+    padding: "4px",
+    margin: "10px auto",
+    alignItem: "center",
+    width: "90%",
+  };
+  const searchNewFriend = (e) => {
+    e.preventDefault();
+    console.log(input);
+    setInput("");
   };
   return (
     <div className="ChatList">
       <AppBar position="static" color="default" elevation={1}>
         <Modal
+          className="modal"
           open={open}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Paper style={style}>
+          aria-describedby="modal-modal-description">
+          <Paper style={style} className="modal">
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Text in a modal
+              Search contact
             </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
+            <form onSubmit={searchNewFriend}>
+              <Paper style={search}>
+                <SearchIcon color="primary" />
+                <Input
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Search by email"
+                  fullWidth
+                />
+              </Paper>
+            </form>
+            {users.map((val) => (
+              <SearchItem value={val} />
+            ))}
           </Paper>
         </Modal>
         <Toolbar className="user-bar">
@@ -76,16 +109,14 @@ const ChatList = () => {
             <IconButton
               aria-owns={moreMenuEl ? "chats-more-menu" : null}
               aria-haspopup="true"
-              onClick={handleMoreMenuClick}
-            >
+              onClick={handleMoreMenuClick}>
               <MoreVertIcon />
             </IconButton>
             <Menu
               id="chats-more-menu"
               anchorEl={moreMenuEl}
               open={Boolean(moreMenuEl)}
-              onClose={handleMoreMenuClose}
-            >
+              onClose={handleMoreMenuClose}>
               <MenuItem onClick={addFriend}>
                 <ListItemIcon>
                   <PersonAddAltIcon fontSize="small" />

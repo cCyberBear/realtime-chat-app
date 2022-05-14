@@ -1,5 +1,6 @@
-import { SET_USER, SET_LOADING, SET_AUTHEN } from "../type";
+import { SET_USER, SET_LOADING, SET_AUTHEN, SET_ALL_USERS } from "../type";
 const initialValue = {
+  users: [],
   currentUser: null,
   loading: false,
   authen: false,
@@ -20,6 +21,11 @@ const userReducer = (state = initialValue, action) => {
       return {
         ...state,
         authen: action.payload,
+      };
+    case SET_ALL_USERS:
+      return {
+        ...state,
+        users: action.payload,
       };
     default:
       return state;

@@ -4,3 +4,4 @@ export const SET_LOADING = "SET_LOADING";
 export const SET_AUTHEN = "SET_AUTHEN";
 export const SET_CONSERVATIONS = "SET_CONSERVATIONS";
 export const SEND_MESSAGE = "SEND_MESSAGE";
+export const SET_ALL_USERS = "SET_ALL_USERS";
