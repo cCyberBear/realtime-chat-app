@@ -3,11 +3,13 @@ import {
   SET_ADD_CONTACT,
   SET_CONSERVATIONS,
   SET_CURRENT_CHAT,
+  SET_WAIT_CHAT,
 } from "../type";
 
 const initialState = {
   conservations: [],
   currentChat: [],
+  waitChat: [],
   opositeUser: null,
 };
 
@@ -36,6 +38,12 @@ const chat = function (state = initialState, action) {
         ...state,
         currentChat: action.data,
         opositeUser: action.opositeUser,
+      };
+    }
+    case SET_WAIT_CHAT: {
+      return {
+        ...state,
+        waitChat: action.data,
       };
     }
     default: {

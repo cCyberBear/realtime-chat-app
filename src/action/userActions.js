@@ -12,7 +12,9 @@ const getCurrentUser = (token) => async (dispatch) => {
   try {
     dispatch({ type: SET_AUTHEN, payload: true });
     setAuthToken(token);
-    const res = await axios.get("http://localhost:3300/kd/api/v0/user/me");
+    const res = await axios.get(
+      "https://khuongduy-chat-app.herokuapp.com/kd/api/v0/user/me"
+    );
     dispatch({ type: SET_USER, payload: res.data.user });
   } catch (error) {
     setAuthToken(null);
@@ -23,7 +25,7 @@ const login = (data) => async (dispatch) => {
   try {
     dispatch({ type: SET_LOADING, payload: true });
     const res = await axios.post(
-      "http://localhost:3300/kd/api/v0/user/login",
+      "https://khuongduy-chat-app.herokuapp.com/kd/api/v0/user/login",
       data
     );
     localStorage.setItem("token", res.data.token);
@@ -36,7 +38,7 @@ const register = (data) => async (dispatch) => {
   try {
     dispatch({ type: SET_LOADING, payload: true });
     const res = await axios.post(
-      "http://localhost:3300/kd/api/v0/user/register",
+      "https://khuongduy-chat-app.herokuapp.com/kd/api/v0/user/register",
       data
     );
     localStorage.setItem("token", res.data.token);
@@ -50,7 +52,7 @@ const getAllUser = () => async (dispatch) => {
   try {
     dispatch({ type: SET_LOADING, payload: true });
     const res = await axios.get(
-      "http://localhost:3300/kd/api/v0/user/all-user"
+      "https://khuongduy-chat-app.herokuapp.com/kd/api/v0/user/all-user"
     );
     const users = res.data.users.filter((val) => val._id !== user._id);
     dispatch({ type: SET_ALL_USERS, payload: users });
@@ -63,7 +65,7 @@ const addContact = (data) => async (dispatch) => {
   try {
     dispatch({ type: SET_LOADING, payload: true });
     const res = await axios.post(
-      "http://localhost:3300/kd/api/v0/conservation/create-conversation",
+      "https://khuongduy-chat-app.herokuapp.com/kd/api/v0/conservation/create-conversation",
       data
     );
     dispatch({ type: SET_ADD_CONTACT, payload: res.data });

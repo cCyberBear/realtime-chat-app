@@ -12,7 +12,7 @@ const getConservation = () => async (dispatch) => {
   try {
     dispatch({ type: SET_LOADING, payload: true });
     const res = await axios.get(
-      `http://localhost:3300/kd/api/v0/conservation/get-conversation/${user._id}`
+      `https://khuongduy-chat-app.herokuapp.com/kd/api/v0/conservation/get-conversation/${user._id}`
     );
     dispatch({ type: SET_CONSERVATIONS, payload: res.data });
   } catch (error) {}
@@ -23,7 +23,7 @@ const getCurrentChat = (conversation) => async (dispatch) => {
   try {
     dispatch({ type: SET_LOADING, payload: true });
     const res = await axios.get(
-      `http://localhost:3300/kd/api/v0/message/get-message/${conversation._id}`
+      `https://khuongduy-chat-app.herokuapp.com/kd/api/v0/message/get-message/${conversation._id}`
     );
     dispatch({
       type: SET_CURRENT_CHAT,
@@ -37,7 +37,7 @@ const sendMessage = (message) => async (dispatch) => {
   try {
     dispatch({ type: SET_LOADING, payload: true });
     const res = await axios.post(
-      `http://localhost:3300/kd/api/v0/message/send-message/`,
+      `https://khuongduy-chat-app.herokuapp.com/kd/api/v0/message/send-message/`,
       message
     );
     dispatch({
