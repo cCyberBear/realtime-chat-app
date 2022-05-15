@@ -1,6 +1,5 @@
 import {
   AppBar,
-  Avatar,
   Input,
   Paper,
   Toolbar,
@@ -9,11 +8,11 @@ import {
 } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import "./Chat.scss";
-import noAvatar from "../../assets/img/noAvatar.png";
 import StatusIcon from "../StatusIcon/StatusIcon";
 import Message from "../Message/Message";
 import SendIcon from "@mui/icons-material/Send";
 import { useSelector } from "react-redux";
+import AvatarByName from "../AvatarByName/AvatarByName";
 
 const Chat = ({ socket }) => {
   const [input, setInput] = useState("");
@@ -55,13 +54,7 @@ const Chat = ({ socket }) => {
                     <StatusIcon status={"online"} />
                   </div>
 
-                  <Avatar
-                    src={
-                      opositeUserData.profilePicture
-                        ? opositeUserData.profilePicture
-                        : noAvatar
-                    }
-                    alt="img"></Avatar>
+                  <AvatarByName name={opositeUserData.username} />
                 </div>
                 <Typography color="inherit" className="name">
                   {opositeUserData.username}
@@ -74,6 +67,7 @@ const Chat = ({ socket }) => {
               {messages.map((val) => (
                 <div ref={scrollRef}>
                   <Message
+                    opositeUserData={opositeUserData}
                     key={val._id}
                     val={val}
                     not_own={val.sender !== currentUser._id}

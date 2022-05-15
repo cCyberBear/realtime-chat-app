@@ -3,6 +3,7 @@ import {
   SET_ADD_CONTACT,
   SET_ALL_USERS,
   SET_AUTHEN,
+  SET_ERROR,
   SET_LOADING,
   SET_USER,
 } from "../type";
@@ -71,7 +72,17 @@ const addContact = (data) => async (dispatch) => {
     dispatch({ type: SET_ADD_CONTACT, payload: res.data });
   } catch (error) {
     console.log(error);
+    dispatch({ type: SET_ERROR, payload: error.response.data.message });
+    setTimeout(() => {
+      dispatch({ type: SET_ERROR, payload: null });
+    }, 5000);
   }
   dispatch({ type: SET_LOADING, payload: false });
 };
-export { getCurrentUser, login, getAllUser, register, addContact };
+
+const logOut = () => (dispatch) => {
+  setAuthToken(null);
+  dispatch({ type: SET_USER, payload: null });
+  localStorage.removeItem("token");
+};
+export { getCurrentUser, login, getAllUser, register, addContact, logOut };

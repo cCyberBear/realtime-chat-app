@@ -13,7 +13,7 @@ const initialState = {
   opositeUser: null,
 };
 
-const chat = function (state = initialState, action) {
+const chat = (state = initialState, action) => {
   switch (action.type) {
     case SET_CONSERVATIONS: {
       return {

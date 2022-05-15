@@ -1,6 +1,5 @@
 import {
   AppBar,
-  Avatar,
   IconButton,
   Input,
   List,
@@ -18,17 +17,18 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SearchIcon from "@mui/icons-material/Search";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import avatar from "../../assets/img/dd3abcf21ee0dfbe86f1.jpg";
 import React, { useEffect, useState } from "react";
 import "./ChatList.scss";
 import ChatListItem from "../ChatListItem/ChatListItem";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUser } from "../../action/userActions";
+import { getAllUser, logOut } from "../../action/userActions";
 import SearchItem from "../SearchItem/SearchItem";
+import AvatarByName from "../AvatarByName/AvatarByName";
 const ChatList = ({ socket }) => {
   const [moreMenuEl, setMoreMenuEl] = useState(null);
   const conservations = useSelector((state) => state.chatReducer.conservations);
   const users = useSelector((state) => state.userReducer.users);
+  const currentUser = useSelector((state) => state.userReducer.currentUser);
   const dispatch = useDispatch();
   const [input, setInput] = useState("");
 
@@ -117,7 +117,9 @@ const ChatList = ({ socket }) => {
           </Paper>
         </Modal>
         <Toolbar className="user-bar">
-          <Avatar src={avatar} alt="avatar"></Avatar>
+          <div className="user">
+            <AvatarByName name={currentUser.username} />
+          </div>
           <div>
             <IconButton
               aria-owns={moreMenuEl ? "chats-more-menu" : null}
@@ -148,7 +150,9 @@ const ChatList = ({ socket }) => {
                 <ListItemIcon>
                   <LogoutIcon fontSize="small" />
                 </ListItemIcon>
-                <ListItemText>Logout</ListItemText>
+                <ListItemText onClick={() => dispatch(logOut())}>
+                  Logout
+                </ListItemText>
               </MenuItem>
             </Menu>
           </div>

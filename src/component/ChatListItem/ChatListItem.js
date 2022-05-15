@@ -1,5 +1,4 @@
 import {
-  Avatar,
   ListItem,
   ListItemButton,
   ListItemText,
@@ -8,7 +7,7 @@ import {
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentChat } from "../../action/chatAction";
-import noavatar from "../../assets/img/noAvatar.png";
+import AvatarByName from "../AvatarByName/AvatarByName";
 import StatusIcon from "../StatusIcon/StatusIcon";
 import "./ChatListItem.scss";
 const ChatListItem = ({ value }) => {
@@ -19,15 +18,14 @@ const ChatListItem = ({ value }) => {
     <ListItem
       className="ChatListItem"
       disablePadding
-      onClick={() => dispatch(getCurrentChat(value))}>
+      onClick={() => dispatch(getCurrentChat(value))}
+    >
       <ListItemButton className="itemButton">
         <div className="outer">
           <div className="inside">
             <StatusIcon status={value.status} />
           </div>
-          <Avatar
-            src={chater.profilePicture ? chater.profilePicture : noavatar}
-            alt="avatar"></Avatar>
+          <AvatarByName name={chater.username} />
         </div>
         <ListItemText
           primary={<p className="text">{chater.username}</p>}

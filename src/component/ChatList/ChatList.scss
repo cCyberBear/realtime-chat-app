@@ -12,6 +12,10 @@
   .user-bar {
     display: flex;
     justify-content: space-between;
+    .user{
+      display: flex;
+      align-items: center;
+    }
   }
   .scroll-bar {
     height: 100%;

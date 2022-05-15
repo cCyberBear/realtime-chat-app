@@ -1,11 +1,11 @@
-import { Avatar, ListItemText, MenuItem, Typography } from "@mui/material";
+import { ListItemText, MenuItem, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./SearchItem.scss";
-import noAvatar from "../../assets/img/noAvatar.png";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import { useDispatch, useSelector } from "react-redux";
 import { addContact } from "../../action/userActions";
+import AvatarByName from "../AvatarByName/AvatarByName";
 const SearchItem = ({ value }) => {
   const dispatch = useDispatch();
   const [added, setAdded] = useState(false);
@@ -31,10 +31,7 @@ const SearchItem = ({ value }) => {
   return (
     <MenuItem className="SearchItem">
       <div className="left">
-        <Avatar
-          className="avatar"
-          src={value.profilePicture ? value.profilePicture : noAvatar}
-        />
+        <AvatarByName name={value.username} />
         <ListItemText>{value.username}</ListItemText>
       </div>
       <div className="right">
