@@ -14,18 +14,18 @@ import StatusIcon from "../StatusIcon/StatusIcon";
 import Message from "../Message/Message";
 import SendIcon from "@mui/icons-material/Send";
 import { useDispatch, useSelector } from "react-redux";
-import { sendMessage } from "../../action/chatAction";
+import { SEND_MESSAGE } from "../../type";
 
-const Chat = () => {
+const Chat = ({ socket }) => {
   const [input, setInput] = useState("");
+  const [newmess, setNewmess] = useState("");
+
   const dispatch = useDispatch();
   const messages = useSelector((state) => state.chatReducer?.currentChat);
   const currentUser = useSelector((state) => state.userReducer.currentUser);
   const conversation = useSelector((state) => state.chatReducer.opositeUser);
   const scrollRef = useRef();
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+
   const opositeUserData = conversation?.members.filter(
     (val) => val._id !== currentUser._id
   )[0];
@@ -36,13 +36,30 @@ const Chat = () => {
       sender: currentUser._id,
       text: input,
     };
-    dispatch(sendMessage(message));
+    if (socket) {
+      socket.emit("chatroomMessage", { ...message });
+    }
     setInput("");
   };
   const handleInputChange = (e) => {
     setInput(e.target.value);
   };
-
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+  useEffect(() => {
+    if (socket) {
+      socket.on("newMessage", (message) => {
+        setNewmess(message._doc);
+      });
+    }
+  });
+  useEffect(() => {
+    dispatch({
+      type: SEND_MESSAGE,
+      payload: newmess,
+    });
+  }, [newmess]);
   return (
     <div className="Chat">
       {conversation ? (

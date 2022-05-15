@@ -1,4 +1,9 @@
-import { SEND_MESSAGE, SET_CONSERVATIONS, SET_CURRENT_CHAT } from "../type";
+import {
+  SEND_MESSAGE,
+  SET_ADD_CONTACT,
+  SET_CONSERVATIONS,
+  SET_CURRENT_CHAT,
+} from "../type";
 
 const initialState = {
   conservations: [],
@@ -18,6 +23,12 @@ const chat = function (state = initialState, action) {
       return {
         ...state,
         currentChat: [...state.currentChat, action.payload],
+      };
+    }
+    case SET_ADD_CONTACT: {
+      return {
+        ...state,
+        conservations: [...state.conservations, action.payload],
       };
     }
     case SET_CURRENT_CHAT: {

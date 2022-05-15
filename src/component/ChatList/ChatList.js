@@ -19,13 +19,13 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import SearchIcon from "@mui/icons-material/Search";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import avatar from "../../assets/img/dd3abcf21ee0dfbe86f1.jpg";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ChatList.scss";
 import ChatListItem from "../ChatListItem/ChatListItem";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUser } from "../../action/userActions";
 import SearchItem from "../SearchItem/SearchItem";
-const ChatList = () => {
+const ChatList = ({ socket }) => {
   const [moreMenuEl, setMoreMenuEl] = useState(null);
   const conservations = useSelector((state) => state.chatReducer.conservations);
   const users = useSelector((state) => state.userReducer.users);
@@ -74,6 +74,18 @@ const ChatList = () => {
     console.log(input);
     setInput("");
   };
+  useEffect(() => {
+    conservations.map((val) => {
+      const chatroomId = val._id;
+      if (socket) {
+        socket.emit("joinRoom", {
+          chatroomId,
+        });
+      }
+      return true;
+    });
+  }, []);
+
   return (
     <div className="ChatList">
       <AppBar position="static" color="default" elevation={1}>
@@ -82,7 +94,8 @@ const ChatList = () => {
           open={open}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description">
+          aria-describedby="modal-modal-description"
+        >
           <Paper style={style} className="modal">
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Search contact
@@ -109,14 +122,16 @@ const ChatList = () => {
             <IconButton
               aria-owns={moreMenuEl ? "chats-more-menu" : null}
               aria-haspopup="true"
-              onClick={handleMoreMenuClick}>
+              onClick={handleMoreMenuClick}
+            >
               <MoreVertIcon />
             </IconButton>
             <Menu
               id="chats-more-menu"
               anchorEl={moreMenuEl}
               open={Boolean(moreMenuEl)}
-              onClose={handleMoreMenuClose}>
+              onClose={handleMoreMenuClose}
+            >
               <MenuItem onClick={addFriend}>
                 <ListItemIcon>
                   <PersonAddAltIcon fontSize="small" />
