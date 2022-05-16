@@ -1,5 +1,5 @@
 .ChatList {
-  width: 400px;
+  width: 350px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -12,7 +12,7 @@
   .user-bar {
     display: flex;
     justify-content: space-between;
-    .user{
+    .user {
       display: flex;
       align-items: center;
     }

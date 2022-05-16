@@ -18,8 +18,7 @@ const ChatListItem = ({ value }) => {
     <ListItem
       className="ChatListItem"
       disablePadding
-      onClick={() => dispatch(getCurrentChat(value))}
-    >
+      onClick={() => dispatch(getCurrentChat(value))}>
       <ListItemButton className="itemButton">
         <div className="outer">
           <div className="inside">
@@ -33,7 +32,7 @@ const ChatListItem = ({ value }) => {
         />
         <div className="noti">
           <Typography className="date">{value.lastTime}</Typography>
-          <div className="unread">2</div>
+          {/* <div className="unread">2</div> */}
         </div>
       </ListItemButton>
     </ListItem>

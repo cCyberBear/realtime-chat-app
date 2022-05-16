@@ -8,11 +8,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 import io from "socket.io-client";
 import { SEND_MESSAGE, SET_WAIT_CHAT } from "../../type";
-import { Alert } from "@mui/material";
+import { Alert, Drawer } from "@mui/material";
+import { Box } from "@mui/system";
 const Logged = () => {
   const [socket, setSocket] = useState(null);
   const [newmess, setNewmess] = useState("");
-
+  const [mobileOpen, setMobileOpen] = useState(
+    window.innerWidth >= 500 ? false : true
+  );
+  const drawerWidth = 350;
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.userReducer.currentUser);
   const conversation = useSelector((state) => state.chatReducer?.opositeUser);
@@ -36,6 +40,9 @@ const Logged = () => {
       newSocket.on("connect", () => {});
       setSocket(newSocket);
     }
+  };
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
   };
   useEffect(() => {
     dispatch(getConservation());
@@ -70,8 +77,48 @@ const Logged = () => {
           {error}, please reload the web page !!!
         </Alert>
       )}
-      <ChatList socket={socket} />
-      <Chat socket={socket} />
+      <Box
+        component="nav"
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        aria-label="mailbox folders">
+        <Drawer
+          // container={container}
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}>
+          <ChatList socket={socket} />
+        </Drawer>
+        <Drawer
+          variant="permanent"
+          sx={{
+            display: { xs: "none", sm: "block" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}
+          open>
+          <ChatList socket={socket} />
+        </Drawer>
+      </Box>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+        }}>
+        <Chat handleDrawerToggle={handleDrawerToggle} socket={socket} />
+      </Box>
     </div>
   );
 };

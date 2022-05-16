@@ -11,10 +11,11 @@ import "./Chat.scss";
 import StatusIcon from "../StatusIcon/StatusIcon";
 import Message from "../Message/Message";
 import SendIcon from "@mui/icons-material/Send";
+import MenuIcon from "@mui/icons-material/Menu";
 import { useSelector } from "react-redux";
 import AvatarByName from "../AvatarByName/AvatarByName";
 
-const Chat = ({ socket }) => {
+const Chat = ({ handleDrawerToggle, socket }) => {
   const [input, setInput] = useState("");
 
   const messages = useSelector((state) => state.chatReducer?.currentChat);
@@ -49,11 +50,18 @@ const Chat = ({ socket }) => {
           <AppBar className="appbar" elevation={1}>
             <Toolbar className="px-16">
               <div className="currentUser">
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  edge="start"
+                  onClick={handleDrawerToggle}
+                  sx={{ mr: 2, display: { sm: "none" } }}>
+                  <MenuIcon />
+                </IconButton>
                 <div className="outer">
                   <div className="inner">
                     <StatusIcon status={"online"} />
                   </div>
-
                   <AvatarByName name={opositeUserData.username} />
                 </div>
                 <Typography color="inherit" className="name">

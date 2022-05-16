@@ -31,7 +31,10 @@ const SearchItem = ({ value }) => {
   return (
     <MenuItem className="SearchItem">
       <div className="left">
-        <AvatarByName name={value.username} />
+        <AvatarByName
+          style={{ margin: "10px 20px 10px 0px" }}
+          name={value.username}
+        />
         <ListItemText>{value.username}</ListItemText>
       </div>
       <div className="right">
